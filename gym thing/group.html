@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exercise Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: #f5f5f5;
+      padding: 40px;
+      margin: 0;
+    }
+
+    .top-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .left-title {
+      text-decoration: none;
+      color: #ff3c3c;
+    }
+
+    .main-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-shadow: 0 0 8px #ff3c3c;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .group-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #0ad6d6;
+      text-shadow: 0 0 6px #0ad6d6;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"], input[type="number"] {
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      max-width: 220px;
+      border: none;
+      border-radius: 6px;
+      background-color: #2b2b2b;
+      color: #fff;
+    }
+
+    button {
+      padding: 10px 16px;
+      background-color: #0ad6d6;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #1e1e1e;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #08bcbc;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #2b2b2b;
+    }
+
+    th, td {
+      border: 1px solid #444;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #333;
+      color: #0ad6d6;
+    }
+
+    td input[type="text"], td input[type="number"] {
+      width: 80px;
+      background-color: #1e1e1e;
+      color: #f5f5f5;
+      border: 1px solid #555;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .actions button {
+      background-color: #555;
+      color: #fff;
+      margin: 0 2px;
+    }
+
+    .actions button:hover {
+      background-color: #777;
+    }
+
+    @media (max-width: 700px) {
+      .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .group-name {
+        align-self: center;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <a href="index.html" class="left-title" aria-label="Back to main menu">
+      <span class="main-title">GYMAPP</span><br />
+      <span class="subtitle">Your exercise/progress tracker</span>
+    </a>
+    <span id="groupName" class="group-name"></span>
+  </div>
+
+  <form id="exerciseForm">
+    <input type="text" id="name" placeholder="Exercise Name" required />
+    <input type="number" id="weight" placeholder="Weight (kg)" required />
+    <input type="number" id="reps" placeholder="Reps" required />
+    <input type="number" id="max" placeholder="Max (optional)" />
+    <br />
+    <button type="submit">Add Exercise</button>
+  </form>
+
+  <table id="exerciseTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Weight</th>
+        <th>Reps</th>
+        <th>Max</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const group = params.get('group');
+    document.getElementById('groupName').textContent = group ? group.toUpperCase() : "EXERCISES";
+
+    const form = document.getElementById('exerciseForm');
+    const tableBody = document.querySelector('#exerciseTable tbody');
+    let data = JSON.parse(localStorage.getItem(group)) || [];
+
+    function saveData() {
+      localStorage.setItem(group, JSON.stringify(data));
+    }
+
+    function renderTable() {
+      tableBody.innerHTML = '';
+      data.forEach((item, index) => {
+        if (item.archived) return; // Skip archived items
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><input type="text" value="${item.name}" onchange="editItem(${index}, 'name', this.value)" /></td>
+          <td><input type="number" value="${item.weight}" onchange="editItem(${index}, 'weight', this.value)" /></td>
+          <td><input type="number" value="${item.reps}" onchange="editItem(${index}, 'reps', this.value)" /></td>
+          <td><input type="number" value="${item.max || ''}" onchange="editItem(${index}, 'max', this.value)" /></td>
+          <td class="actions">
+            <button onclick="archiveItem(${index})">Archive</button>
+            <button onclick="deleteItem(${index})">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function editItem(index, key, value) {
+      data[index][key] = key === 'name' ? value : Number(value);
+      saveData();
+    }
+
+    function deleteItem(index) {
+      data.splice(index, 1);
+      saveData();
+      renderTable();
+    }
+
+    function archiveItem(index) {
+      data[index].archived = true;
+      saveData();
+      renderTable();
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const weight = document.getElementById('weight').value;
+      const reps = document.getElementById('reps').value;
+      const max = document.getElementById('max').value;
+
+      if (!name || !weight || !reps) return alert("Please fill in required fields.");
+
+      data.push({
+        name,
+        weight: Number(weight),
+        reps: Number(reps),
+        max: max ? Number(max) : null,
+        archived: false
+      });
+
+      saveData();
+      renderTable();
+      form.reset();
+    });
+
+    window.editItem = editItem;
+    window.deleteItem = deleteItem;
+    window.archiveItem = archiveItem;
+
+    renderTable();
+  </script>
+</body>
+</html>
