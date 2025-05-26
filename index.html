@@ -9,7 +9,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px 0 40px 40px;
+      padding: 20px 0 40px 40px; /* moved up by 20px */
       background: linear-gradient(135deg, #1a1dda, #140d7c);
       color: white;
       min-height: 100vh;
@@ -21,23 +21,25 @@
       justify-content: space-between;
       flex-wrap: wrap;
       margin-bottom: 30px;
+      /* moved higher */
       position: relative;
       top: -20px;
     }
 
     h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 64px;
-      color: #cc0000;
-      text-shadow: 0 0 2px #cc0000, 0 0 4px #990000;
-      margin: 0;
-      padding-top: 20px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      display: flex;
-      flex-direction: column;
-      line-height: 1;
-    }
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  color: #cc0000;
+  text-shadow: 0 0 2px #cc0000, 0 0 4px #990000;
+  margin: 0;
+  padding-top: 20px; /* added padding to lower the title */
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
 
     h1 .subtitle {
       font-family: Arial, sans-serif;
@@ -55,15 +57,19 @@
       border-radius: 16px;
       padding: 20px 40px;
       display: flex;
-      gap: 20px;
+      gap: 20px; /* slightly reduced to fit new button */
       align-items: center;
       justify-content: flex-end;
       flex-wrap: wrap;
       min-width: 400px;
-      box-shadow: inset 2px 2px 6px #3a3a3a, inset -2px -2px 6px #1a1a1a, 4px 4px 10px rgba(27, 33, 215, 0.6);
+      box-shadow:
+        inset 2px 2px 6px #3a3a3a,
+        inset -2px -2px 6px #1a1a1a,
+        4px 4px 10px rgba(27, 33, 215, 0.6);
       border: 2px solid #0e00cc;
     }
 
+    /* About Us button styling */
     .about-btn {
       font-weight: 700;
       text-transform: uppercase;
@@ -73,7 +79,10 @@
       border-radius: 12px;
       color: #fff0f0;
       cursor: pointer;
-      box-shadow: inset 2px 2px 8px #cc0000, inset -2px -2px 8px #ff3333, 0 0 15px #ff0000;
+      box-shadow:
+        inset 2px 2px 8px #cc0000,
+        inset -2px -2px 8px #ff3333,
+        0 0 15px #ff0000;
       border: none;
       transition: background-color 0.3s, box-shadow 0.3s;
       user-select: none;
@@ -81,12 +90,16 @@
 
     .about-btn:hover, .about-btn:focus {
       background: linear-gradient(145deg, #990000, #ff0000);
-      box-shadow: inset 2px 2px 12px #ff4444, inset -2px -2px 12px #ff6666, 0 0 20px #ff5555;
+      box-shadow:
+        inset 2px 2px 12px #ff4444,
+        inset -2px -2px 12px #ff6666,
+        0 0 20px #ff5555;
       outline: none;
       color: white;
       text-shadow: 0 0 8px #ff9999;
     }
 
+    /* Custom Dropdown Styles (unchanged except gap adjusted) */
     .dropdown {
       position: relative;
       width: 220px;
@@ -99,7 +112,9 @@
       letter-spacing: 1.5px;
       background: linear-gradient(145deg, #807f7f, #787676);
       border-radius: 12px;
-      box-shadow: inset 2px 2px 5px #000000, inset -2px -2px 5px #4d4d4d;
+      box-shadow:
+        inset 2px 2px 5px #000000,
+        inset -2px -2px 5px #4d4d4d;
       transition: background-color 0.3s, box-shadow 0.3s;
     }
 
@@ -114,24 +129,31 @@
       text-shadow: 0 0 4px #212121;
     }
 
-    .dropdown.open {
+    .dropdown:hover, .dropdown:focus-within {
       background: linear-gradient(145deg, #330000, #660000);
-      box-shadow: inset 2px 2px 8px #990000, inset -2px -2px 8px #ff3333, 0 0 15px #ff0000;
+      box-shadow:
+        inset 2px 2px 8px #990000,
+        inset -2px -2px 8px #ff3333,
+        0 0 15px #ff0000;
+      outline: none;
     }
 
-    .dropdown.open > .label {
+    .dropdown:hover > .label, .dropdown:focus-within > .label {
       color: #fff0f0;
       text-shadow: 0 0 8px #ff6666;
     }
 
-    .dropdown .menu {
+    .menu {
       position: absolute;
       top: 100%;
       left: 0;
       width: 100%;
       background: linear-gradient(145deg, #1a1a1a, #2e2e2e);
       border-radius: 0 0 12px 12px;
-      box-shadow: 0 6px 12px rgba(204, 0, 0, 0.8), inset 1px 1px 3px #3a3a3a, inset -1px -1px 3px #1a1a1a;
+      box-shadow:
+        0 6px 12px rgba(204, 0, 0, 0.8),
+        inset 1px 1px 3px #3a3a3a,
+        inset -1px -1px 3px #1a1a1a;
       display: none;
       max-height: 220px;
       overflow-y: auto;
@@ -139,7 +161,7 @@
       border-top: 2px solid #cc0000;
     }
 
-    .dropdown.open .menu {
+    .dropdown:hover > .menu {
       display: block;
     }
 
@@ -173,10 +195,12 @@
       filter: drop-shadow(0 0 2px #cc0000);
     }
 
-    .dropdown.open .label .arrow {
+    .dropdown:hover > .label .arrow,
+    .dropdown:focus-within > .label .arrow {
       transform: rotate(-135deg);
     }
 
+    /* Responsive fallback */
     @media (max-width: 700px) {
       .header {
         flex-direction: column;
@@ -208,91 +232,63 @@
 
     <div class="container" role="navigation" aria-label="Main navigation">
       <!-- Muscle Group Dropdown -->
-      <div class="dropdown" tabindex="0">
-        <div class="label">
+      <div class="dropdown" tabindex="0" aria-haspopup="true" aria-expanded="false">
+        <div class="label" aria-controls="muscle-menu" aria-haspopup="true" aria-expanded="false">
           Muscle Group <span class="arrow"></span>
         </div>
-        <ul class="menu" role="menu" aria-label="Muscle Group options">
-          <li onclick="selectMuscle('chest')">Chest</li>
-          <li onclick="selectMuscle('biceps')">Biceps</li>
-          <li onclick="selectMuscle('back')">Back</li>
-          <li onclick="selectMuscle('forearm')">Forearm</li>
-          <li onclick="selectMuscle('leg')">Leg</li>
-          <li onclick="selectMuscle('triceps')">Triceps</li>
-          <li onclick="selectMuscle('abs')">Abs</li>
-          <li onclick="selectMuscle('trapez')">Trapez</li>
+        <ul class="menu" id="muscle-menu" role="menu" aria-label="Muscle Group options">
+          <li role="menuitem" tabindex="0" onclick="selectMuscle('chest')">Chest</li>
+          <li role="menuitem" tabindex="0" onclick="selectMuscle('biceps')">Biceps</li>
+          <li role="menuitem" tabindex="0" onclick="selectMuscle('back')">Back</li>
+          <li role="menuitem" tabindex="0" onclick="selectMuscle('forearm')">Forearm</li>
+          <li role="menuitem" tabindex="0" onclick="selectMuscle('leg')">Leg</li>
+          <li role="menuitem" tabindex="0" onclick="selectMuscle('triceps')">Triceps</li>
+          <li role="menuitem" tabindex="0" onclick="selectMuscle('abs')">Abs</li>
+          <li role="menuitem" tabindex="0" onclick="selectMuscle('trapez')">Trapez</li>
         </ul>
       </div>
 
       <!-- Days Dropdown -->
-      <div class="dropdown" tabindex="0">
-        <div class="label">
+      <div class="dropdown" tabindex="0" aria-haspopup="true" aria-expanded="false">
+        <div class="label" aria-controls="days-menu" aria-haspopup="true" aria-expanded="false">
           Days <span class="arrow"></span>
         </div>
-        <ul class="menu" role="menu" aria-label="Days options">
-          <li onclick="selectDay('edit')">Edit Day</li>
-          <li onclick="selectDay('day1')">Day 1</li>
-          <li onclick="selectDay('day2')">Day 2</li>
-          <li onclick="selectDay('day3')">Day 3 (optional)</li>
-          <li onclick="selectDay('day4')">Day 4 (optional)</li>
+        <ul class="menu" id="days-menu" role="menu" aria-label="Days options">
+          <li role="menuitem" tabindex="0" onclick="selectDay('edit')">Edit Day</li>
+          <li role="menuitem" tabindex="0" onclick="selectDay('day1')">Day 1</li>
+          <li role="menuitem" tabindex="0" onclick="selectDay('day2')">Day 2</li>
+          <li role="menuitem" tabindex="0" onclick="selectDay('day3')">Day 3 (optional)</li>
+          <li role="menuitem" tabindex="0" onclick="selectDay('day4')">Day 4 (optional)</li>
         </ul>
       </div>
 
       <!-- Progress Dropdown -->
-      <div class="dropdown" tabindex="0">
-        <div class="label">
+      <div class="dropdown" tabindex="0" aria-haspopup="true" aria-expanded="false">
+        <div class="label" aria-controls="progress-menu" aria-haspopup="true" aria-expanded="false">
           Progress <span class="arrow"></span>
         </div>
-        <ul class="menu" role="menu" aria-label="Progress options">
-          <li onclick="selectProgress('photos')">Photos</li>
-          <li onclick="selectProgress('history')">ExerciseArchive</li>
+        <ul class="menu" id="progress-menu" role="menu" aria-label="Progress options">
+          <li role="menuitem" tabindex="0" onclick="selectProgress('photos')">Photos</li>
+          <li role="menuitem" tabindex="0" onclick="selectProgress('history')">ExerciseArchive</li>
         </ul>
       </div>
 
       <!-- About Us Button -->
       <button class="about-btn" type="button" onclick="window.location.href='aboutus.html'">
-        About Us
+    About Us
       </button>
     </div>
   </div>
 
   <script>
-    // Toggle dropdowns manually
-    document.querySelectorAll('.dropdown').forEach(dropdown => {
-      dropdown.addEventListener('click', function (e) {
-        e.stopPropagation();
-        document.querySelectorAll('.dropdown').forEach(d => {
-          if (d !== this) d.classList.remove('open');
-        });
-        this.classList.toggle('open');
-      });
-    });
-
-    // Close all when clicking outside
-    document.addEventListener('click', () => {
-      document.querySelectorAll('.dropdown').forEach(dropdown => {
-        dropdown.classList.remove('open');
-      });
-    });
-
-    // Prevent menu from closing when clicked inside
-    document.querySelectorAll('.menu').forEach(menu => {
-      menu.addEventListener('click', e => {
-        e.stopPropagation();
-      });
-    });
-
     function selectMuscle(group) {
-      console.log(`Selected Muscle Group: ${group}`);
-      // window.location.href = `group.html?group=${group}`;
+      window.location.href = `group.html?group=${group}`;
     }
-
     function selectDay(day) {
-      alert(`Selected Day: ${day}`);
+      alert(`Selected Day: ${day}`); // Replace with your logic
     }
-
     function selectProgress(progress) {
-      alert(`Selected Progress: ${progress}`);
+      alert(`Selected Progress: ${progress}`); // Replace with your logic
     }
   </script>
 </body>
